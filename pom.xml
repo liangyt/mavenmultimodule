@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--父模块的 groupId、artifactId、version，子模块可以通过parent继承父模块，使用的就是这里定义的value-->
+    <groupId>com.liangyt</groupId>
+    <artifactId>maven-multi-module</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--根pom必须要有-->
+    <packaging>pom</packaging>
+    <!--子模块-->
+    <modules>
+        <module>service</module>
+        <module>provide</module>
+        <module>consumer</module>
+    </modules>
+
+    <properties>
+        <java-version>1.8</java-version>
+        <service-version>1.0-SNAPSHOT</service-version>
+        <spring-boot-version>1.5.4.RELEASE</spring-boot-version>
+    </properties>
+
+    <!--
+        使用dependencyManagement的话，则子模块不会自动继承父POM依赖；
+        需要子模块显示定义需要的依赖，如果不写 version 则使用父POM定义的version,如果子模块的依赖写了version则使用子模块的。
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <!--该依赖里面其实还包含了很多其它的依赖，这里只是为了示范，生产环境可以细化，只添加需要的依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-version}</version>
+            </dependency>
+            <!--定义子模块包，其他子模块可以引用-->
+            <dependency>
+                <groupId>com.liangyt</groupId>
+                <artifactId>service</artifactId>
+                <version>${service-version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

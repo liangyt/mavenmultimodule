@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--继承的父模块-->
+    <parent>
+        <artifactId>maven-multi-module</artifactId>
+        <groupId>com.liangyt</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--一般跟父模块下的模块名一致，也是其它模块引用的名称-->
+    <artifactId>service</artifactId>
+    <!--
+        发版的版本号,如果重新发布了新的版本，则父模块添加的该依赖需要新的版本的话还需要相应的修改一下才能引用新的发布包
+    -->
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <!--
+        需要哪个依赖就添加哪个依赖：
+        如果父模块里面有该依赖的话，则只要不填写版本则跟父模块版本一样；
+        如果写了版本号，则跟父模块没有什么关系；
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+</project>
